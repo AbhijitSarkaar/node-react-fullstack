@@ -1,0 +1,13 @@
+
+in development mode, requests are sent to endpoints that are handled by both create react app server and express server 
+
+to redirect a part of the requests to express server and not change anything in the code, proxies are used in development mode 
+
+in production mode
+    - only express server is used to serve both frontend and backend so all requests would be sent to only one host 
+    - browser would automatically send the endpoint request to the backend server live at current host 
+
+
+proxy redirects request at localhost:3000/auth/google to localhost:5000/auth/google
+and sends the returned response to request at localhost:3000/auth/google 
+
