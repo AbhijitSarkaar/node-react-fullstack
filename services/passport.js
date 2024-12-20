@@ -29,24 +29,13 @@ passport.use(
       callbackURL: "/auth/google/callback",
       proxy: true,
     },
-    (accessToken, refreshToken, profile, done) => {
-      //check if user already exists
-      User.findOne({ googleId: profile.id }).then((existingUser) => {
-        if (existingUser) {
-          //user already exists
-          done(null, existingUser);
-        } else {
-          //new mongoose model instance created
-          new User({
-            googleId: profile.id,
-          })
-            // mongoose model instance saved
-            .save()
-            .then((user) => {
-              done(null, user);
-            });
-        }
-      });
+    async (accessToken, refreshToken, profile, done) => {
+      const existingUser = await User.findOne({ googleId: profile.id });
+      if (existingUser) return done(null, existingUser);
+      const user = await new User({
+        googleId: profile.id,
+      }).save();
+      done(null, user);
     }
   )
 );
