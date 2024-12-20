@@ -22,7 +22,7 @@ module.exports = (app) => {
 
     // route handler once user has been authenticated
     (req, res) => {
-      res.send(req.session);
+      res.redirect("/surveys");
     }
   );
 
@@ -34,6 +34,6 @@ module.exports = (app) => {
   app.get("/api/logout", (req, res) => {
     //added to request by passport
     req.logout();
-    res.send("logged out");
+    res.redirect("/");
   });
 };
