@@ -1,0 +1,57 @@
+- Login with google button redirects request to localhost:3000/auth/google
+- With proxy in client, localhost:3000/auth/google is redirected to localhost:5000/auth/google where server is running 
+- Passport service  
+    - Serializeuser 
+    - Deserializeuser 
+    - Google strategy callback function implementation 
+        - It returns a user profile details 
+- Middlewares 
+    - Cookie session 
+    - Passport initialise 
+    - Passport session 
+- Route handling 
+    - /auth/google 
+        - Passport initialises authentication flow 
+    - /auth/google/callback
+        - Passport calls google services with returned code from google to get user profile details 
+
+Error 
+- Failed to serialise user into a session 
+
+Observations 
+- serializeuser function
+    - serialises user data into a session
+    - stores the data in req.session property 
+    - it is used to persist user data after authentication 
+- Deserialiseuser function 
+    - it is used to retrieve user data from session 
+    - receives a document id stored in mongodb 
+    - Fetches user data from database 
+    - Adds user data into req.user property 
+    - It works with passport.initialize and possport.session middleware enabled 
+    - it stores data in res.user property after done() 
+- user id stored in database gets serialized and get deserialized 
+- both passport.initialize and passport.session helps in geting the session data from request cookies 
+- session data contains a property ‘passport’ with empty object before authentication without the middlewares passport.initialize and passport.session 
+- passport.initialize and passport.session does not do any encryption / decryption of session data. it is done by cookie-session middleware  
+- at the very beginning before passport authentication flow starts, req.session is an empty object created by cookie-session 
+- req.logout 
+    - req.user is removed
+    - req.session.passport is assigned an empty object which is serialized and sent to client as cookie 
+    - client will have a cookie with sesion data { passport: {} }
+- ‘Set-Cookie’ header is not sent with every response. only when req.session is updated, that is when response headers contain ‘Set-Cookie’ header 
+
+middlewares 
+- cookie-session
+    - it adds a ‘Set-Cookie’ header to the response if req.session data is changed 
+    - stores session data in a client 
+    - stores light session data 
+    - it serializes the session data and stores in a cookie 
+    - it does not encrypt session data in a cookie 
+    - without this middleware cookie data wil not be stored in client 
+    - it adds ‘session’ property to request object from ‘session’ cookie in http incoming request 
+- passport.initialize
+    - adds req._passport property to request object 
+- passport.session 
+    - it adds session data to _passport property 
+    - it calls deserializeuser to get user details and to set req.user 

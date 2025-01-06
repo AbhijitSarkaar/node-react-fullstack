@@ -1,0 +1,52 @@
+
+
+initial phase 
+
+    - http request sent to server '/data' from client 
+    - cookie-session middleware checks 'session' property in req.headers.cookies and adds req.session = {} if 'session' cookie not found 
+
+
+login flow 
+
+    - http request is sent to '/auth/google' managed by passport 
+    - passport prompts users to login through google login 
+    - after authentication, passport handles a callback '/auth/google/callback' which sends google another request with 'code' value received from 
+    first request 
+    - once response from second request is received, google strategy callback is called
+    - after google strategy callback is done, result from the callback is sent to passport.serializeUser function 
+    - passport.serializeUser adds the user data into req.session.passport.user property essentially setting up a session 
+    for a session based authentication flow 
+    - one req.session is updated, cookie-session middleware updates 'Set-Cookie' header in response which updates the 'session' cookie that 
+    reflects the updated changes to req.session 
+    - response with updated cookie is sent to client 
+
+
+accessing a authenticated resource 
+
+    - http request is sent to '/api/current_user' 
+    - 'session' cookie is extracted by cookie-session middleware and set to req.session 
+    - passport.initialize() is used to add _passport property to req 
+    - passport.session() is used to take session property from req._passport and send the 'user' property (if found) to passport.deserializeUser 
+    - deserializeUser takes the session value and adds the value to req.user 
+    - route handler for '/api/current_user' returns a response with value req.user 
+
+
+logout flow 
+
+    - http request is sent to '/api/logout' 
+    - 'session' cookie is extracted by cookie-session middleware and set to req.session 
+    - passport.initialize() is used to add _passport property to req 
+    - passport.session() is used to take session property from req._passport and send the 'user' property (if found) to passport.deserializeUser 
+    - deserializeUser takes the session value and adds the value to req.user 
+    - route handler for '/api/logout' implementes req.logout() 
+        - it removes req.user 
+        - it sets req.session.passport = {}, clearing any session data present for passport 
+    - cookie-session notices changed value of req.session, and updates 'session' cookie value with 'Set-Cookie' header 
+    - response is sent to client which updates it's cookies and user get's logged out 
+
+
+conclusion 
+    - whole authentication flow is dependent on session value stored in client cookies
+    - with every http request, cookie values are added which are used to check if user is authenticated or not 
+
+

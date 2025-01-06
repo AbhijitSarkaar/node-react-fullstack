@@ -19,24 +19,3 @@ Getting users details from google oauth flow
 
 Creating a new user record from google sign in flow 
 - A new user record is created in the database from the google strategy callback function once verified that the user is a new user 
-
-
-Passport serializeUser and deserializeUser utility functions 
-- Serializeuser is called by passport after user has authenticated successfully to initiate a login session. It stores user information to the session 
-- deserializeUser extracts the user information from the cookie data and sets to req.user property 
-
-
-More informations about session 
-- Passport decodes the cookie and updates req.session property of the request which is received at route handlers request body 
-    - req.session contains user id 
-- Passport sets the cookie which is sent to client 
-- Cookie-session extracts the cookie value and sets req.session property 
-- Session data is a set of key value pairs 
-- Cookie-session 
-    - Cookie contains all the values required e.g user id 
-    - Useful if data to be stored for a session is of less amount
-- Express-session 
-    - Cookie contains a session id. A session id can be referenced to find a session that contains relevant informations 
-    - Sessions can be stored in a remote database as records 
-    - Useful for sessions that requires large amount of data 
-- More relevant information that can be stored in sessions, lesser is the amount of database queries that’ll be needed 

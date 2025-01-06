@@ -6,10 +6,12 @@ const keys = require("../config/keys");
 const User = mongoose.model("users");
 
 passport.serializeUser((user, done) => {
+  console.log("serializeUser");
   done(null, user.id);
 });
 
 passport.deserializeUser((id, done) => {
+  console.log("deserializeUser", id);
   User.findById(id).then((user) => {
     done(null, user);
   });

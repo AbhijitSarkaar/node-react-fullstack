@@ -13,12 +13,23 @@ mongoose.connect(keys.mongoURI);
 const app = express();
 
 //middlewares
+app.use((req, res, next) => {
+  console.log("first middleware req.headers.cookie", req.headers.cookie);
+  console.log("first middleware req.session", req.session);
+  next();
+});
 app.use(
   cookieSession({
     maxAge: 30 * 24 * 60 * 60 * 1000,
     keys: [keys.cookieKey],
   })
 );
+// app.use((req, res, next) => {
+//   console.log("second middleware req.headers.cookie", req.headers.cookie);
+//   console.log("second middleware req.session", req.session);
+//   next();
+// });
+
 app.use(passport.initialize());
 app.use(passport.session());
 
