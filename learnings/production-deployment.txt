@@ -1,0 +1,13 @@
+
+
+notes 
+
+    - server 
+        - it handles backend requests and frontend requests
+        - it serves static files and build files of frontend 
+    
+    - client 
+        - it creates a build for the files 
+
+    - ci / cd 
+        - circle ci can be used 
