@@ -1,0 +1,6 @@
+
+
+notes 
+
+    - max size of a document is 4 mb 
+    - collections can be individual level or at a document level calling it subdocument level collections
