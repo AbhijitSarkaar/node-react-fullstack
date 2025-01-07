@@ -3,11 +3,20 @@
 notes 
 
     - server 
+        - there's only one server in production and all requests are sent only to that server 
         - it handles backend requests and frontend requests
-        - it serves static files and build files of frontend 
+        - it serves static files and build files of client
     
     - client 
-        - it creates a build for the files 
+        - it creates and stores a build file for the js files 
+
+    - production deployment platform (e.g render)
+        - update fullstack project build command
+            - install server dependencies
+            - install client dependencies 
+            - create js build for client  
+
+        - run server 
 
     - ci / cd 
         - circle ci can be used 
