@@ -1,0 +1,24 @@
+
+
+
+payment flow 
+
+    - client fetches a payment confirmation token by calling stripe api with stripe public key and credit card details 
+    - client sends the received token to server
+    - server uses the token to create a charge object for doing an actual charge on the credit card
+        - uses stripe secret key obtained from stripe dashboard  
+    - once charge is performed successfully 
+        - server updates the result on database 
+        - server sends a confirmation to client 
+    - client updates the ui state with updated details 
+
+
+
+third party applications used
+
+    - account registration on stripe.com
+        - publishable key 
+        - secret key 
+    - 'react-stripe-checkout' in client 
+    - 'stripe' for server 
+    
