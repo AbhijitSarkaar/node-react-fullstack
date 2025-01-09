@@ -1,11 +1,11 @@
 import { BrowserRouter, Route } from "react-router-dom";
 import Header from "./Header";
 import Landing from "./Landing";
+import Dashboard from "./Dashboard";
+import SurveyNew from "./surveys/SurveyNew";
 import * as actions from "../actions";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
-
-const Dashboard = () => <h2>Dashboard</h2>;
 
 //react router matches current route with every possible routes with the current route and returns a list of matched routes
 //with exact keyword, current route should be exactly the route provided for a component to be displayed
@@ -20,10 +20,11 @@ const App = () => {
   return (
     <div className="container">
       <BrowserRouter>
-        <div>
+        <div className="container">
           <Header />
           <Route exact path="/" component={Landing}></Route>
-          <Route path="/surveys" component={Dashboard}></Route>
+          <Route exact path="/surveys" component={Dashboard}></Route>
+          <Route path="/surveys/new" component={SurveyNew}></Route>
         </div>
       </BrowserRouter>
     </div>
