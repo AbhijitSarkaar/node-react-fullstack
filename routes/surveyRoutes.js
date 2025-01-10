@@ -10,7 +10,9 @@ const surveyTemplate = require("../services/emailTemplates/surveyTemplate");
 const Survey = mongoose.model("surveys");
 
 module.exports = (app) => {
-  app.get("/api/surveys/thanks", (req, res) => {});
+  app.get("/api/surveys/:surveyId/:choice", (req, res) => {
+    res.send("thanks for voting!");
+  });
 
   app.post("/api/surveys/webhooks", (req, res) => {
     const p = new Path("/api/surveys/:surveyId/:choice");
@@ -29,6 +31,7 @@ module.exports = (app) => {
       .compact()
       .uniqBy("email", "surveyId")
       .each(({ surveyId, email, choice }) => {
+        // update document if email matches and recipient has not responded before
         Survey.updateOne(
           {
             _id: surveyId,
@@ -44,6 +47,7 @@ module.exports = (app) => {
             $inc: { [choice]: 1 },
             // $ is the searched recipient document in the subdocument collection
             $set: { "recipients.$.responded": true },
+            lastResponded: new Date(),
           }
         ).exec();
       })
