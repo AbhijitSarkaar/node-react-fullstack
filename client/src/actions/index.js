@@ -1,5 +1,5 @@
 import axios from "axios";
-import { FETCH_USER } from "./types";
+import { FETCH_USER, FETCH_SURVEYS } from "./types";
 
 //dispatch sends an action i.e a js object to all the reducers added in combineReducers
 //redux expects an action creator to return a js object with type property upon called
@@ -28,6 +28,15 @@ export const submitSurvey = (values, history) => async (dispatch) => {
 
   dispatch({
     type: FETCH_USER,
+    payload: res.data,
+  });
+};
+
+export const fetchSurveys = () => async (dispatch) => {
+  const res = await axios.get("/api/surveys");
+
+  dispatch({
+    type: FETCH_SURVEYS,
     payload: res.data,
   });
 };
