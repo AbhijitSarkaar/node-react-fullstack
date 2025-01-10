@@ -1,3 +1,5 @@
+
+
 notes 
 
     - email template 
@@ -16,11 +18,10 @@ notes
     
 
     - email sending flow 
-
         - list of recipients => 1 mailer object representing 1 email => email provider => emails sent to recipients 
             - only 1 email template is sent to all the recipients, i.e all recipients receive same email with same email body contents 
 
-    - clicking links in a email body 
+    - clicktracking / clicking links in a email body 
         - sendgrid replaces links in email body with links to their own servers, primarily to check which links are clicked 
         - sendgrid when replacing the links, adds a unique token to the link which identifies a user
         - from the sendgrid servers the links are then redirected to backend endpoints   

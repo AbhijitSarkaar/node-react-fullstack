@@ -17,7 +17,7 @@ const FIELDS = [
   },
   {
     label: "Recipient List",
-    name: "emails",
+    name: "recipients",
   },
 ];
 
@@ -55,6 +55,8 @@ const SurveyForm = ({ handleSubmit, onSurveySubmit }) => {
 const validate = (values) => {
   const errors = {};
 
+  errors.recipients = validateEmails(values.recipients || "");
+
   if (!values.title) {
     errors.title = "Title is required!";
   }
@@ -64,11 +66,9 @@ const validate = (values) => {
   if (!values.body) {
     errors.body = "Email body is required!";
   }
-  if (!values.emails) {
-    errors.emails = "Recipient List is required!";
+  if (!values.recipients) {
+    errors.recipients = "Recipient List is required!";
   }
-
-  errors.emails = validateEmails(values.emails || "");
 
   return errors;
 };

@@ -1,4 +1,6 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { withRouter } from "react-router-dom";
+import * as actions from "../../actions";
 
 const FIELDS = [
   {
@@ -15,11 +17,12 @@ const FIELDS = [
   },
   {
     label: "Recipient List",
-    name: "emails",
+    name: "recipients",
   },
 ];
 
-const SurveyReview = ({ onCancel }) => {
+const SurveyReview = ({ onCancel, history }) => {
+  const dispatch = useDispatch();
   const form = useSelector((state) => state.form);
   const formValues = form.surveyForm.values;
 
@@ -46,9 +49,14 @@ const SurveyReview = ({ onCancel }) => {
       >
         Back
       </button>
-      <button className="green right btn-flat white-text">Send Survey</button>
+      <button
+        onClick={() => dispatch(actions.submitSurvey(formValues, history))}
+        className="green right btn-flat white-text"
+      >
+        Send Survey
+      </button>
     </>
   );
 };
 
-export default SurveyReview;
+export default withRouter(SurveyReview);
