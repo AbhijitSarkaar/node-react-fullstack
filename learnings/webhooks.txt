@@ -1,0 +1,18 @@
+
+
+- webhook 
+    - webhook is an instance where third party application server notifies an application server about different events 
+    - sendgrid sends a POST request periodically to the application backend server
+    with number of clicks by users during a period of time ( e.g 30 seconds )
+
+- capturing webhook data 
+    - sendgrid webhook sends a POST request to a configured url wuth data of a list of events
+        - [{
+            event: 'click',
+            url: clicked_url,
+            email: user_email
+        }]
+        
+        - POST /api/surveys/webhooks 
+    
+    - these webhook data can be stored in database to get more informations about current state of the applications 

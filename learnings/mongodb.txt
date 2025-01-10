@@ -4,3 +4,7 @@ notes
 
     - max size of a document is 4 mb 
     - collections can be individual level or at a document level calling it subdocument level collections
+    - queries
+        - queries should return as less data as possible
+        - for searching and filtering records, it is better to do it through database queries rather than pulling data into server 
+        and doing the required computations 

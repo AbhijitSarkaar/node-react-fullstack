@@ -24,7 +24,4 @@ notes
     - clicktracking / clicking links in a email body 
         - sendgrid replaces links in email body with links to their own servers, primarily to check which links are clicked 
         - sendgrid when replacing the links, adds a unique token to the link which identifies a user
-        - from the sendgrid servers the links are then redirected to backend endpoints   
-
-    - webhook 
-        - webhook is an instance where third party applications notifies an applications server about some event 
+        - from the sendgrid servers the links are then redirected to backend endpoints  
